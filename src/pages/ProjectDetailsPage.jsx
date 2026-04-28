@@ -1,8 +1,31 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import AddTask from "../components/AddTask"; // for rendering Task Add Form
 import TaskCard from "../components/TaskCard"; // for rendering Task List
+import axios from "axios"; // used for calling the API
+import { useEffect, useState } from "react";
 
 function ProjectDetailsPage () {
+
+  const { projectId } = useParams() // destructuring the project id from dynamic params (see App.jsx => :projectId)
+
+  const [ product, setProduct ] = useState(null)
+
+  useEffect(() => {
+    getData()
+  }, [])
+
+  const getData = async() => {
+    try {
+
+      // call the API here to receive project details...
+
+    } catch (error) {
+      console.log(error)
+      //todo proper error handling here
+    }
+  }
+
+  // if (!product) return <h3>Loading...</h3> //todo proper loading animation here
   
   return (
     <div className="ProjectDetailsPage">

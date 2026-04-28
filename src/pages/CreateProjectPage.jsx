@@ -1,13 +1,20 @@
 import { useState } from "react";
+import axios from "axios"; // used for calling the API
 
 function CreateProjectPage() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    // ...logic for creating a new Project should be here
 
+    try {
+      // call the API here to create one project...
+      
+    } catch (error) {
+      console.log(error)
+      //todo proper error handling here
+    }
   };  
 
   return (

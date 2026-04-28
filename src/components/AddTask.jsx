@@ -5,11 +5,17 @@ function AddTask() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    // ...logic for creating a new Task should be here
-    // ... the ID of the Project should be part of the Task data
+
+    try {
+      // call the API here to create one task...
+      // IMPORTANT: the ID of the Project should be part of the Task data
+    
+    } catch (error) {
+      console.log(error)
+      //todo proper error handling here
+    }
 
   };
   

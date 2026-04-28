@@ -1,18 +1,34 @@
 import { useState, useEffect } from "react";
+import axios from "axios"; // used for calling the API
+import { useParams } from "react-router-dom";
 
 function EditProjectPage() {
+
+  const { projectId } = useParams() // destructuring the project id from dynamic params (see App.jsx => :projectId)
+  
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async(e) => {
     e.preventDefault();
-    // ...updated logic should be here
 
+    try {
+      // call the API here to edit one task...
+      
+    } catch (error) {
+      console.log(error)
+      //todo proper error handling here 
+    }
   };
 
-  const deleteProject = () => {
-    // ...delete logic should be here
-    
+  const deleteProject = async() => {
+    try {
+      // call the API here to delete one task...
+      
+    } catch (error) {
+      console.log(error)
+      //todo proper error handling here
+    }
   }; 
 
   return (
