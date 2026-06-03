@@ -5,55 +5,56 @@ import axios from "axios"; // used for calling the API
 import AddTask from "../components/AddTask"; // for rendering Task Add Form
 import TaskCard from "../components/TaskCard"; // for rendering Task List
 
-function ProjectDetailsPage () {
+function ProjectDetailsPage() {
+  const { projectId } = useParams(); // destructuring the project id from dynamic params (see App.jsx => /:projectId)
 
-  const { projectId } = useParams() // destructuring the project id from dynamic params (see App.jsx => /:projectId)
-
-  const [ product, setProduct ] = useState(null)
-  const [ isLoading, setIsLoading ] = useState(true)
+  const [project, setProject] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    getData()
-  }, [])
+    getData();
+  }, []);
 
-  const getData = async() => {
+  const getData = async () => {
+    setIsLoading(true);
     try {
-
       // call the API here to receive project details...
-
-      setIsLoading(false) // render the component once the data finished loading
-
+      const response = await axios.get(
+        `${import.meta.env.VITE_SERVER_URL}/projects/${projectId}?_embed=tasks`,
+      );
+      // console.log(response.data);
+      setIsLoading(false); // render the component once the data finished loading
+      setProject(response.data);
     } catch (error) {
-      console.log(error)
+      console.log(error);
       //todo proper error handling here
     }
-  }
+  };
 
-  if (isLoading) return <h3>Loading...</h3> //todo proper loading animation here
-  
+  if (isLoading) return <h3>Loading...</h3>; //todo proper loading animation here
+
   return (
     <div className="ProjectDetailsPage">
-
       <div>
-        <h1>PROJECT_NAME</h1>
-        <p>PROJECT_DESCRIPTION</p>
+        <h1>{project.title}</h1>
+        <p>{project.description}</p>
       </div>
 
       {/* ... list of all Tasks for this Project should be rendered here */}
-
-      {/* example of a single TaskCard being rendered */}
-      {/* <TaskCard /> */}
+      {project.tasks.map((task) => {
+        return <TaskCard key={task.id} taskObj={task} />;
+      })}
 
       {/* ... form for adding a new Task should be rendered here    */}
+      <AddTask projectId={project.id} getData={getData} />
 
       <Link to="/projects">
         <button>Back to projects</button>
       </Link>
-      
-      <Link to={`/projects/edit/PROJECT_ID_HERE`}>
+
+      <Link to={`/projects/edit/${project.id}`}>
         <button>Edit Project</button>
-      </Link>      
-      
+      </Link>
     </div>
   );
 }

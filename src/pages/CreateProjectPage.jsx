@@ -1,36 +1,43 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 import axios from "axios"; // used for calling the API
 
 function CreateProjectPage() {
+  const navigate = useNavigate();
 
-  const navigate = useNavigate()
-  
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
+      const body = {
+        title: title,
+        description: description,
+      };
       // call the API here to create one project...
-      
+      const response = await axios.post(
+        `${import.meta.env.VITE_SERVER_URL}/projects`,
+        body,
+      );
+      navigate("/projects");
     } catch (error) {
-      console.log(error)
+      console.log(error);
       //todo proper error handling here
     }
-  };  
+  };
 
   return (
     <div className="CreateProjectPage">
       <h3>Add Project</h3>
 
-      <form onSubmit={handleSubmit}> 
+      <form onSubmit={handleSubmit}>
         <label>Title:</label>
         <input
           type="text"
           name="title"
           value={title}
+          required={true}
           onChange={(e) => setTitle(e.target.value)}
         />
 
@@ -39,6 +46,7 @@ function CreateProjectPage() {
           type="text"
           name="description"
           value={description}
+          required={true}
           onChange={(e) => setDescription(e.target.value)}
         />
 

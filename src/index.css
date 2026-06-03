@@ -98,6 +98,13 @@ textarea {
 
 .EditProjectPage {
   background-color: rgb(239, 196, 88);
+
+  textarea {
+    min-width: 60%;
+    max-width: 96%;
+    min-height: 50px;
+    max-height: 150px;
+  }
 }
 
 .EditProjectPage form,
